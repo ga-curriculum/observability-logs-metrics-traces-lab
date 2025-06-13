@@ -1,11 +1,11 @@
 <h1>
   <span class="prefix"></span>
-  <span class="headline">[tktk Headline]</span>
+  <span class="headline">Observability: Logs, Metrics, and Traces Lab</span>
 </h1>
 
 ## About
 
-tktk Write a short but descriptive summary of the content in this module. Introduce the lab. What will the students build in this lab?
+In this hands-on lab, students will explore the fundamentals of observability by instrumenting a Python FastAPI application with Prometheus metrics and visualizing them in Grafana. They will learn how to expose custom metrics from their application, configure Prometheus to collect those metrics, and build a live dashboard to monitor system behavior in real time. This module introduces essential observability concepts like metrics, monitoring, and visualization, giving students practical experience with industry-standard tools.
 
 ## Content
 
@@ -16,32 +16,22 @@ tktk Write a short but descriptive summary of the content in this module. Introd
 
 ### Prerequisites
 
-- tktk
+- Designing Robust Test Suites
+- CI & Automation Basics
+- Intro to Site Reliability Engineering (SRE)
 
 ### Time to complete
 
-Estimated time to complete core lab exercise: **tktk min**
+Estimated time to complete core lab exercise: **120 min**
 
 ### Starter code
 
-tktk If there is not a starter code repo that students will fork and clone to start this lab, then this section and all of its content should be removed.
-
-🟢 [Starter code](https://git.generalassemb.ly/modular-curriculum-all-courses/tktk)
-
-### Solution code
-
-🏁 [Solution code](https://git.generalassemb.ly/modular-curriculum-all-courses/tktk)
-
-### Deployed sites
-
-tktk If there is not a deployed site related to this module this section and all of its content should be removed.
-
-🌐 [Live site](https://generalassemb.ly/tktk)
+🟢 [Starter code](https://git.generalassemb.ly/modular-curriculum-all-courses/observability-logs-metrics-traces-lab-starter)
 
 ### Course landing pages
 
-- [tktk-course-acronym - tktk Course Full Name](https://pages.git.generalassemb.ly/modular-curriculum-all-courses/tktk-module-name/canvas-landing-pages/tktk-course-acronym.html)
-- [Fallback](https://pages.git.generalassemb.ly/modular-curriculum-all-courses/tktk-module-name/canvas-landing-pages/fallback.html)
+- [PTR - Python Testing & Reliability](https://pages.git.generalassemb.ly/modular-curriculum-all-courses/observability-logs-metrics-traces-lab/canvas-landing-pages/ptr.html)
+- [Fallback](https://pages.git.generalassemb.ly/modular-curriculum-all-courses/observability-logs-metrics-traces-lab/canvas-landing-pages/fallback.html)
 
 ### Resources
 

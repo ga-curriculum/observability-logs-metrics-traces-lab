@@ -1,58 +1,105 @@
 <h1>
-  <span class="headline">[tktk Headline]</span>
+  <span class="headline">Observability: Logs, Metrics, and Traces Lab</span>
   <span class="subhead">Setup</span>
 </h1>
 
 ## Setup
 
-tktk The below is a generic starting point for lab setup. You may need to make adjustments to this.
+In this setup lesson, you’ll install Prometheus and Grafana on your machine, two of the most widely used open-source observability tools. You’ll also clone a simple FastAPI application that we’ll instrument with metrics in the next lab.
 
-Open your Terminal application and navigate to your <code class="filepath">~/code/ga/labs</code> directory:
+### 🔧 **1. Clone the Starter Project**
 
-```bash
-cd ~/code/ga/labs
-```
-
-### Fork and clone the starter code
-
-tktk Use the below instructions if students will need starter code from a separate module to complete the lab exercise. If they do not, delete this section and all of its contents.
-
-Fork the [[tktk Headline] Starter Code](https://git.generalassemb.ly/modular-curriculum-all-courses/tktk-module-name-starter-code) repository.
-
-Clone a copy of your remote repo locally by using the `git clone` command:
+We’ll be working with a simple FastAPI app with two routes. Clone it to your local machine:
 
 ```bash
-git clone https://git.generalassemb.ly/<your-username>/tktk-module-name-starter-code.git tktk-module-name
+git clone https://github.com/your-org/python-observability-starter.git
+cd python-observability-starter
 ```
 
-Replace `<your-username>` (including the `<` and `>`) with your General Assembly GitHub Enterprise username before you run this command.
-
-### Create and clone a GitHub repo
-
-tktk Use the below instructions if students do not need starter code from a separate module to complete the lab exercise. If they do, delete this section and all of its contents.
-
-Make a new repository on [GitHub](https://github.com/) named `tktk-module-name`.
-
-Clone a copy of your remote repo locally by using the `git clone` command:
+> **Note:** This project requires Python 3.9+ and a virtual environment. If you haven't already, create and activate one:
 
 ```bash
-git clone https://github.com/<your-username>/tktk-module-name.git
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
 ```
 
-Replace `<your-username>` (including the `<` and `>`) with your GitHub username before you run this command.
+### 📦 **2. Install Prometheus**
 
-### Launch in VS Code
-
-Next, `cd` into the cloned directory, <code class="filepath">tktk-module-name</code>:
+#### ➔ Mac (Homebrew)
 
 ```bash
-cd tktk-module-name
+brew install prometheus
 ```
 
-Open the contents of the directory in VS Code:
+#### ➔ Windows
+
+1. Go to [https://prometheus.io/download](https://prometheus.io/download)
+2. Download the Windows .zip file.
+3. Extract it to a folder (e.g., `C:\prometheus`)
+4. Run `prometheus.exe` from a terminal:
 
 ```bash
-code .
+cd C:\prometheus
+prometheus.exe --config.file=prometheus.yml
 ```
 
-tktk Are there more lab setup steps? Don't forget to add them here.
+#### ➔ Linux (manual)
+
+```bash
+wget https://github.com/prometheus/prometheus/releases/download/v2.51.0/prometheus-2.51.0.linux-amd64.tar.gz
+tar xvf prometheus-2.51.0.linux-amd64.tar.gz
+cd prometheus-2.51.0.linux-amd64
+./prometheus --config.file=prometheus.yml
+```
+
+### 📊 **3. Install Grafana**
+
+#### ➔ Mac (Homebrew)
+
+```bash
+brew install grafana
+brew services start grafana
+```
+
+#### ➔ Windows
+
+1. Go to [https://grafana.com/grafana/download](https://grafana.com/grafana/download)
+2. Download the Windows installer (.msi)
+3. Follow the installation wizard
+4. Start Grafana Server:
+
+```bash
+cd "C:\Program Files\GrafanaLabs\grafana\bin"
+grafana-server
+```
+
+#### ➔ Linux (Debian/Ubuntu)
+
+```bash
+sudo apt-get install -y software-properties-common
+sudo add-apt-repository "deb https://packages.grafana.com/oss/deb stable main"
+wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+sudo apt-get update
+sudo apt-get install grafana
+sudo systemctl start grafana-server
+sudo systemctl enable grafana-server
+```
+
+## ✅ **Verify Setup**
+
+- **Prometheus UI**: [http://localhost:9090](http://localhost:9090)
+- **Grafana UI**: [http://localhost:3000](http://localhost:3000)
+  - Default login: `admin / admin` (you’ll be prompted to change it)
+
+<img src="./assets/grafana.png" alt="" width="600" />
+
+<br>
+
+### **Next Steps**
+
+In the next section, you’ll:
+
+- Instrument your FastAPI app to expose metrics
+- Configure Prometheus to scrape them
+- Visualize those metrics in Grafana
