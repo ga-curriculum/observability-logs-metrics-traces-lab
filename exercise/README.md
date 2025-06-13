@@ -66,13 +66,13 @@ Grafana turns raw time-series data (like Prometheus metrics) into visual dashboa
 - Builds custom dashboards
 - Helps you spot trends, monitor health, and debug visually
 
-# Lab Instructions
+## Lab Instructions
 
-## Your Goal
+### Your Goal
 
 You’ll update a FastAPI app to expose Prometheus metrics and visualize them in Grafana.
 
-## 🔧 1. Install `prometheus_client`
+### 1. Install `prometheus_client`
 
 ```bash
 pip install prometheus_client
@@ -81,33 +81,36 @@ pip install prometheus_client
 > ⚠️ Note: The prometheus_client library is installed via pip and used inside your Python app.
 > Prometheus and Grafana themselves must be installed separately, as they are standalone services. This was done in Setup.
 
-## 🧠 2. Add Metrics to FastAPI
+### 2. Add Metrics to FastAPI
 
 Update `app/main.py` to add new imports and a new route called `/metrics`.
 
 ```python
 from fastapi import FastAPI, Request, Response
-from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST # New Imports
+from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST  # New Imports
 from app.routes import router
 
-REQUEST_COUNT = Counter("app_requests_total", "Total number of requests", ["method", "endpoint"])
+REQUEST_COUNT = Counter("app_requests_total", "Total number of requests", [
+                        "method", "endpoint"])
 
 app = FastAPI(title="Observability Starter App")
 app.include_router(router)
 
+
 @app.middleware("http")
 async def count_requests(request: Request, call_next):
-response = await call_next(request)
-REQUEST_COUNT.labels(method=request.method, endpoint=request.url.path).inc()
-return response
+    response = await call_next(request)
+    REQUEST_COUNT.labels(method=request.method,
+                         endpoint=request.url.path).inc()
+    return response
 
 # New Route
 @app.get("/metrics")
 def metrics():
-return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
+    return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
 ```
 
-## ✅ 3. Run & Test It
+### 3. Run & Test It
 
 ```bash
 uvicorn app.main:app --reload
@@ -121,36 +124,89 @@ Visit:
 
 You should now see Prometheus metrics in plain text.
 
-# Configuring Prometheus to Scrape Metrics
+```plaintext
+# HELP app_requests_total Total number of requests
+# TYPE app_requests_total counter
+app_requests_total{endpoint="/",method="GET"} 1.0
+app_requests_total{endpoint="/favicon.ico",method="GET"} 1.0
+app_requests_total{endpoint="/items/42",method="GET"} 1.0
+# HELP app_requests_created Total number of requests
+# TYPE app_requests_created gauge
+app_requests_created{endpoint="/",method="GET"} 1.749848773836558e+09
+app_requests_created{endpoint="/favicon.ico",method="GET"} 1.749848773851161e+09
+app_requests_created{endpoint="/items/42",method="GET"} 1.749848798266423e+09
+```
 
-## 1. Locate or Create `prometheus.yml`
+**_Keep the server running in your terminal window._**
 
-If it doesn't exist, create it in the folder where Prometheus runs.
+## Configuring Prometheus to Scrape Metrics
 
-## ✏️ 2. Add This Config
+### 1. Open a new terminal window.
+
+### 2. Create a `prometheus.yml` in the root folder.
+
+```bash
+touch prometheus.yml
+```
+
+### 3. Add This Config
 
 ```yaml
 global:
-scrape_interval: 15s
+  scrape_interval: 15s
 
 scrape_configs:
-
-- job_name: 'fastapi-app'
-  static_configs: - targets: ['localhost:8000']
+  - job_name: 'fastapi-app'
+    static_configs:
+      - targets: ['localhost:8000']
 ```
 
 > Prometheus will scrape `http://localhost:8000/metrics` every 15 seconds.
 
-## ▶️ 3. Start Prometheus
+Your file structure should look like this :
 
-```bash
-./prometheus --config.file=prometheus.yml
+```
+observability-logs-metrics-traces-lab-starter/
+├── app/
+│   ├── __init__.py
+│   ├── main.py
+│   └── routes.py
+├── prometheus.yml
+├── requirements.txt
+├── README.md
+└── venv/
 ```
 
-## ✅ 4. Confirm
+### 4. Start Prometheus in a second terminal window
+
+For Mac install with Homebrew:
+
+```bash
+prometheus --config.file=prometheus.yml
+```
+
+**For Windows:**
+
+Make sure `prometheus.yml` is in that same folder, or provide the full path:
+
+```bash
+prometheus.exe --config.file=C:\path\to\prometheus.yml
+```
+
+**For Linux:**
+
+If they copied the binary somewhere in $PATH (like /usr/local/bin):
+
+```bash
+prometheus --config.file=/full/path/to/prometheus.yml
+```
+
+### 5. Confirm
 
 Go to [http://localhost:9090](http://localhost:9090) → **Status → Targets**  
 You should see `fastapi-app` listed and marked as **UP**.
+
+image
 
 Try this query in the **Graph** tab:
 
@@ -160,29 +216,35 @@ app_requests_total
 
 Click **Execute** to see your metric.
 
-# 📊 Connecting Grafana to Prometheus
+image
 
-## 🧭 1. Access Grafana
+## Connecting Grafana to Prometheus
+
+### 1. Access Grafana
 
 - [http://localhost:3000](http://localhost:3000)
 - Login: `admin / admin`
 - Set a new password when prompted
 
-## ➕ 2. Add Prometheus as Data Source
+### 2. Add Prometheus as Data Source
 
-- ⚙️ → **Data Sources** → **Add data source**
+- Grafana Logo → **Connections** → **Data Sources**
+- `+ Add New Data Source`
 - Choose **Prometheus**
 - URL: `http://localhost:9090`
 - Click **Save & Test**
 
-## 📈 3. Create a Dashboard
+### 3. Create a Dashboard
 
-- Click "+" → **Dashboard** → **Add new panel**
-- Enter: `app_requests_total`
+- Grafana Logo → **Dashboards** → `+ Create dashboard`
+- **`+ Add visialization`**
+- Select `Prometheus`
+- Select: `app_requests_total` as a query
 - See a live graph of your metric
-- Customize and click **Apply**
 
-## 🔁 4. Trigger More Requests
+You will see the graph increase as your visits to your routes increase.
+
+### 4. Trigger More Requests
 
 Visit the API endpoints again and watch your dashboard update in real time.
 
