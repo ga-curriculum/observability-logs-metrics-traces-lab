@@ -7,13 +7,17 @@
 
 In this setup lesson, you’ll install Prometheus and Grafana on your machine, two of the most widely used open-source observability tools. You’ll also clone a simple FastAPI application that we’ll instrument with metrics in the next lab.
 
-### 🔧 **1. Clone the Starter Project**
+### **1. Clone the Starter Project**
 
-We’ll be working with a simple FastAPI app with two routes. Clone it to your local machine:
+We’ll be working with a simple FastAPI app with two routes.
+
+- [observability-logs-metrics-traces-lab-starter](https://git.generalassemb.ly/modular-curriculum-all-courses/observability-logs-metrics-traces-lab-starter)
+
+Clone it to your local machine:
 
 ```bash
-git clone https://github.com/your-org/python-observability-starter.git
-cd python-observability-starter
+git clone https://git.generalassemb.ly/modular-curriculum-all-courses/observability-logs-metrics-traces-lab-starter.git
+cd observability-logs-metrics-traces-lab-starter
 ```
 
 > **Note:** This project requires Python 3.9+ and a virtual environment. If you haven't already, create and activate one:
@@ -24,15 +28,15 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 📦 **2. Install Prometheus**
+## **2. Install Prometheus**
 
-#### ➔ Mac (Homebrew)
+#### Mac (Homebrew)
 
 ```bash
 brew install prometheus
 ```
 
-#### ➔ Windows
+#### Windows
 
 1. Go to [https://prometheus.io/download](https://prometheus.io/download)
 2. Download the Windows .zip file.
@@ -44,7 +48,7 @@ cd C:\prometheus
 prometheus.exe --config.file=prometheus.yml
 ```
 
-#### ➔ Linux (manual)
+#### Linux (manual)
 
 ```bash
 wget https://github.com/prometheus/prometheus/releases/download/v2.51.0/prometheus-2.51.0.linux-amd64.tar.gz
@@ -53,16 +57,16 @@ cd prometheus-2.51.0.linux-amd64
 ./prometheus --config.file=prometheus.yml
 ```
 
-### 📊 **3. Install Grafana**
+### **3. Install Grafana**
 
-#### ➔ Mac (Homebrew)
+#### Mac (Homebrew)
 
 ```bash
 brew install grafana
 brew services start grafana
 ```
 
-#### ➔ Windows
+#### Windows
 
 1. Go to [https://grafana.com/grafana/download](https://grafana.com/grafana/download)
 2. Download the Windows installer (.msi)
@@ -74,7 +78,7 @@ cd "C:\Program Files\GrafanaLabs\grafana\bin"
 grafana-server
 ```
 
-#### ➔ Linux (Debian/Ubuntu)
+#### Linux (Debian/Ubuntu)
 
 ```bash
 sudo apt-get install -y software-properties-common
@@ -86,13 +90,13 @@ sudo systemctl start grafana-server
 sudo systemctl enable grafana-server
 ```
 
-## ✅ **Verify Setup**
+## **Verify Setup**
 
 - **Prometheus UI**: [http://localhost:9090](http://localhost:9090)
 - **Grafana UI**: [http://localhost:3000](http://localhost:3000)
   - Default login: `admin / admin` (you’ll be prompted to change it)
 
-<img src="./assets/grafana.png" alt="" width="600" />
+<img src="./assets/grafana.png" alt="" width="700" />
 
 <br>
 

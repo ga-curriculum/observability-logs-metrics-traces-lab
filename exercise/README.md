@@ -206,7 +206,7 @@ prometheus --config.file=/full/path/to/prometheus.yml
 Go to [http://localhost:9090](http://localhost:9090) → **Status → Targets**  
 You should see `fastapi-app` listed and marked as **UP**.
 
-image
+<img src="./assets/prometheus.png" alt="" width="700" />
 
 Try this query in the **Graph** tab:
 
@@ -216,7 +216,7 @@ app_requests_total
 
 Click **Execute** to see your metric.
 
-image
+<img src="./assets/query.png" alt="" width="700" />
 
 ## Connecting Grafana to Prometheus
 
