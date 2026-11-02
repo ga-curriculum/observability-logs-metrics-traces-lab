@@ -26,7 +26,7 @@ Estimated time to complete core lab exercise: **120 min**
 
 ### Starter code
 
-🟢 [Starter code](https://git.generalassemb.ly/modular-curriculum-all-courses/observability-logs-metrics-traces-lab-starter)
+🟢 [Starter code](https://github.com/ga-curriculum/observability-logs-metrics-traces-lab-starter)
 
 ### Course landing pages
 
