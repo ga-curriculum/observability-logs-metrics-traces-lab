@@ -11,12 +11,12 @@ In this setup lesson, you’ll install Prometheus and Grafana on your machine, t
 
 We’ll be working with a simple FastAPI app with two routes.
 
-- [observability-logs-metrics-traces-lab-starter](https://git.generalassemb.ly/modular-curriculum-all-courses/observability-logs-metrics-traces-lab-starter)
+- [observability-logs-metrics-traces-lab-starter](https://github.com/ga-curriculum/observability-logs-metrics-traces-lab-starter)
 
 Clone it to your local machine:
 
 ```bash
-git clone https://git.generalassemb.ly/modular-curriculum-all-courses/observability-logs-metrics-traces-lab-starter.git
+git clone https://github.com/ga-curriculum/observability-logs-metrics-traces-lab-starter.git
 cd observability-logs-metrics-traces-lab-starter
 ```
 
